@@ -1,0 +1,6 @@
+/practica
+/node-modules
+node_modules
+.env
+*.env
+/src/config/keys.ts
