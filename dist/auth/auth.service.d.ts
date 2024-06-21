@@ -23,16 +23,19 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose/types/inferrawdoctype" />
-import { HydratedDocument } from 'mongoose';
-export type TareaDocument = HydratedDocument<Tarea>;
-export declare class Tarea {
-    id: string;
-    titulo: string;
-    descripcion: string;
-    estado: boolean;
+import { Usuario } from './schemas/usuario.schema';
+import { Model } from 'mongoose';
+import { JwtService } from '@nestjs/jwt';
+import { RegistroDto } from './dto/registro.dto';
+import { LoginDto } from './dto/login.dto';
+export declare class AuthService {
+    private usuarioModel;
+    private jwtService;
+    constructor(usuarioModel: Model<Usuario>, jwtService: JwtService);
+    registro(datosRegistro: RegistroDto): Promise<{
+        token: string;
+    }>;
+    login(datosLogin: LoginDto): Promise<{
+        token: string;
+    }>;
 }
-export declare const TareaSchema: import("mongoose").Schema<Tarea, import("mongoose").Model<Tarea, any, any, any, import("mongoose").Document<unknown, any, Tarea> & Tarea & {
-    _id: import("mongoose").Types.ObjectId;
-}, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, Tarea, import("mongoose").Document<unknown, {}, import("mongoose").FlatRecord<Tarea>> & import("mongoose").FlatRecord<Tarea> & {
-    _id: import("mongoose").Types.ObjectId;
-}>;

@@ -9,12 +9,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const auth_controller_1 = require("./auth.controller");
+const auth_service_1 = require("./auth.service");
+const mongoose_1 = require("@nestjs/mongoose");
+const usuario_schema_1 = require("./schemas/usuario.schema");
+const passport_1 = require("@nestjs/passport");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
+const jwt_strategy_1 = require("./jwt.strategy");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
-        controllers: [auth_controller_1.AuthController]
+        imports: [
+            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
+            jwt_1.JwtModule.registerAsync({
+                inject: [config_1.ConfigService],
+                useFactory: (config) => {
+                    return {
+                        secret: config.get('JWT_SECRET'),
+                        signOptions: {
+                            expiresIn: config.get('JWT_EXPIRES'),
+                        },
+                    };
+                },
+            }),
+            mongoose_1.MongooseModule.forFeature([{ name: usuario_schema_1.Usuario.name, schema: usuario_schema_1.UsuarioSchema }]),
+        ],
+        controllers: [auth_controller_1.AuthController],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
+        exports: [jwt_strategy_1.JwtStrategy, passport_1.PassportModule],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

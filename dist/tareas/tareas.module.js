@@ -11,13 +11,15 @@ const common_1 = require("@nestjs/common");
 const tareas_controller_1 = require("./tareas.controller");
 const tareas_service_1 = require("./tareas.service");
 const mongoose_1 = require("@nestjs/mongoose");
-const tarea_schema_1 = require("../schemas/tarea.schema");
+const tarea_schema_1 = require("./schemas/tarea.schema");
+const auth_module_1 = require("../auth/auth.module");
 let TareasModule = class TareasModule {
 };
 exports.TareasModule = TareasModule;
 exports.TareasModule = TareasModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            auth_module_1.AuthModule,
             mongoose_1.MongooseModule.forFeature([{ name: tarea_schema_1.Tarea.name, schema: tarea_schema_1.TareaSchema }]),
         ],
         controllers: [tareas_controller_1.TareasController],

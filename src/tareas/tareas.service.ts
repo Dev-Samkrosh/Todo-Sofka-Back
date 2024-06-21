@@ -1,87 +1,65 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTareaDto, UpdateTareaDto } from './dto/tarea.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Tarea } from 'src/schemas/tarea.schema';
+import { Tarea } from 'src/tareas/schemas/tarea.schema';
 import { Model } from 'mongoose';
+import { CreateTareaDto } from './dto/create-tarea.dto';
+import { Usuario } from 'src/auth/schemas/usuario.schema';
 
 @Injectable()
 export class TareasService {
-  // ? Aún no se ha implementado la base de datos del todo
   constructor(@InjectModel(Tarea.name) private tareaModel: Model<Tarea>) {}
 
-  //!!! Simula la DB temporalmente !!! Debe ser cambiada junto con los métodos abajo
-  //   private tareas: Tarea[] = [
-  //     {
-  //       id: '1',
-  //       titulo: 'prueba',
-  //       descripcion: 'prueba',
-  //       estado: false,
-  //     },
-  //   ];
+  async createTareas(
+    datosTarea: CreateTareaDto,
+    usuario: Usuario,
+  ): Promise<Tarea> {
+    const datos = Object.assign(datosTarea, { usuario: usuario._id });
 
-  //   createTareas(
-  //     id: string,
-  //     titulo: string,
-  //     descripcion: string,
-  //     estado: boolean,
-  //   ) {
-  //     const tarea = {
-  //       id,
-  //       titulo,
-  //       descripcion,
-  //       estado,
-  //     };
-  //     this.tareas.push(tarea);
-  //   }
-
-  //   getTareas() {
-  //     return this.tareas;
-  //   }
-
-  //   getTareaPorId(id: string): TareaEntity {
-  //     return this.tareas.find((tarea) => tarea.id === id);
-  //   }
-
-  //   updateTareas(id: string, camposActualizados: UpdateTareaDto) {
-  //     //!!! Tiene un error Cannot convert undefinend or null to object
-  //     //! Faltan excepciones y condicionales
-  //     const tarea = this.getTareaPorId(id);
-  //     const nuevaTarea = Object.assign(tarea, camposActualizados);
-
-  //     this.tareas = this.tareas.map((tarea) =>
-  //       tarea.id === id ? nuevaTarea : tarea,
-  //     );
-
-  //     return nuevaTarea;
-  //   }
-
-  //   deleteTareas(id: string) {
-  //     this.tareas = this.tareas.filter((tarea) => tarea.id !== id);
-  //     console.log(this.tareas);
-  //   }
-  // }
-
-  async createTareas(datosTarea: CreateTareaDto) {
     const nuevaTarea = new this.tareaModel(datosTarea);
+
     return nuevaTarea.save();
   }
 
   async getTareas(): Promise<Tarea[]> {
-    return await this.tareaModel.find();
+    const tarea = await this.tareaModel.find();
+
+    if (tarea.length == 0) {
+      throw new NotFoundException('No hay tareas');
+    }
+
+    return tarea;
   }
 
   async getTareaPorId(id: string): Promise<Tarea> {
-    return await this.tareaModel.findById(id);
+    const tarea = await this.tareaModel.findById(id);
+
+    if (!tarea) {
+      throw new NotFoundException(`No hay tareas con dicho id: ${id}`);
+    }
+
+    return tarea;
   }
 
   async updateTareas(id: string, camposActualizados: Tarea): Promise<Tarea> {
-    return await this.tareaModel.findOneAndUpdate(
+    const tarea = await this.tareaModel.findOneAndUpdate(
       { id: id },
       camposActualizados,
     );
+
+    if (!tarea) {
+      throw new NotFoundException(`No hay tareas con dicho id: ${id}`);
+    }
+
+    return tarea;
   }
 
   async deleteTareas(id: string): Promise<Tarea> {
-    return await this.tareaModel.findOneAndDelete({ id: id });
+    const tarea = await this.tareaModel.findOneAndDelete({ id: id });
+
+    if (!tarea) {
+      throw new NotFoundException(`No hay tareas con dicho id: ${id}`);
+    }
+
+    return tarea;
   }
 }

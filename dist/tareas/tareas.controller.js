@@ -13,57 +13,77 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TareasController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const tareas_service_1 = require("./tareas.service");
-const tarea_dto_1 = require("./dto/tarea.dto");
+const update_tarea_dto_1 = require("./dto/update-tarea.dto");
+const swagger_1 = require("@nestjs/swagger");
+const create_tarea_dto_1 = require("./dto/create-tarea.dto");
+const passport_1 = require("@nestjs/passport");
 let TareasController = class TareasController {
     constructor(tareasService) {
         this.tareasService = tareasService;
     }
-    getTareas() {
+    async getTareas() {
         return this.tareasService.getTareas();
     }
-    createTareas(datosTarea) {
-        return this.tareasService.createTareas(datosTarea);
+    async createTareas(datosTarea, req) {
+        return this.tareasService.createTareas(datosTarea, req.user);
     }
-    updateTareas(id, camposActualizados) {
+    async updateTareas(id, camposActualizados) {
         return this.tareasService.updateTareas(id, camposActualizados);
     }
-    deleteTareas(id) {
+    async deleteTareas(id) {
         return this.tareasService.deleteTareas(id);
     }
 };
 exports.TareasController = TareasController;
 __decorate([
     (0, common_1.Get)('/get'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    openapi.ApiResponse({ status: 200, type: [require("./schemas/tarea.schema").Tarea] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TareasController.prototype, "getTareas", null);
 __decorate([
     (0, common_1.Post)('/create'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    openapi.ApiResponse({ status: 201, type: require("./schemas/tarea.schema").Tarea }),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [tarea_dto_1.CreateTareaDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_tarea_dto_1.CreateTareaDto, Object]),
+    __metadata("design:returntype", Promise)
 ], TareasController.prototype, "createTareas", null);
 __decorate([
-    (0, common_1.Patch)('/update/:id'),
+    (0, common_1.Put)('/update/:id'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    openapi.ApiResponse({ status: 200, type: require("./schemas/tarea.schema").Tarea }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, tarea_dto_1.UpdateTareaDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [String, update_tarea_dto_1.UpdateTareaDto]),
+    __metadata("design:returntype", Promise)
 ], TareasController.prototype, "updateTareas", null);
 __decorate([
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Deleted Successfully',
+    }),
+    (0, swagger_1.ApiNotFoundResponse)({
+        description: 'Not Found',
+    }),
     (0, common_1.Delete)('/delete/:id'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    openapi.ApiResponse({ status: 200, type: require("./schemas/tarea.schema").Tarea }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], TareasController.prototype, "deleteTareas", null);
 exports.TareasController = TareasController = __decorate([
     (0, common_1.Controller)('/tareas'),
+    (0, swagger_1.ApiTags)('Tareas'),
     __metadata("design:paramtypes", [tareas_service_1.TareasService])
 ], TareasController);
 //# sourceMappingURL=tareas.controller.js.map

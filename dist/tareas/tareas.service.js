@@ -15,27 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TareasService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const tarea_schema_1 = require("../schemas/tarea.schema");
+const tarea_schema_1 = require("./schemas/tarea.schema");
 const mongoose_2 = require("mongoose");
 let TareasService = class TareasService {
     constructor(tareaModel) {
         this.tareaModel = tareaModel;
     }
-    async createTareas(datosTarea) {
+    async createTareas(datosTarea, usuario) {
+        const datos = Object.assign(datosTarea, { usuario: usuario._id });
         const nuevaTarea = new this.tareaModel(datosTarea);
         return nuevaTarea.save();
     }
     async getTareas() {
-        return await this.tareaModel.find();
+        const tarea = await this.tareaModel.find();
+        if (tarea.length == 0) {
+            throw new common_1.NotFoundException('No hay tareas');
+        }
+        return tarea;
     }
     async getTareaPorId(id) {
-        return await this.tareaModel.findById(id);
+        const tarea = await this.tareaModel.findById(id);
+        if (!tarea) {
+            throw new common_1.NotFoundException(`No hay tareas con dicho id: ${id}`);
+        }
+        return tarea;
     }
     async updateTareas(id, camposActualizados) {
-        return await this.tareaModel.findOneAndUpdate({ id: id }, camposActualizados);
+        const tarea = await this.tareaModel.findOneAndUpdate({ id: id }, camposActualizados);
+        if (!tarea) {
+            throw new common_1.NotFoundException(`No hay tareas con dicho id: ${id}`);
+        }
+        return tarea;
     }
     async deleteTareas(id) {
-        return await this.tareaModel.findOneAndDelete({ id: id });
+        const tarea = await this.tareaModel.findOneAndDelete({ id: id });
+        if (!tarea) {
+            throw new common_1.NotFoundException(`No hay tareas con dicho id: ${id}`);
+        }
+        return tarea;
     }
 };
 exports.TareasService = TareasService;

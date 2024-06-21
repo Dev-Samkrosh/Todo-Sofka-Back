@@ -11,6 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TareaSchema = exports.Tarea = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
+const swagger_1 = require("@nestjs/swagger");
+const mongoose_2 = require("mongoose");
+const usuario_schema_1 = require("../../auth/schemas/usuario.schema");
 let Tarea = class Tarea {
 };
 exports.Tarea = Tarea;
@@ -19,10 +22,15 @@ __decorate([
         required: true,
         trim: true,
     }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], Tarea.prototype, "id", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({
+        required: true,
+        trim: true,
+    }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], Tarea.prototype, "titulo", void 0);
 __decorate([
@@ -34,10 +42,21 @@ __decorate([
         required: true,
         default: false,
     }),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], Tarea.prototype, "estado", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        type: mongoose_2.default.Schema.Types.ObjectId,
+        ref: 'Usuario',
+    }),
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", usuario_schema_1.Usuario)
+], Tarea.prototype, "usuario", void 0);
 exports.Tarea = Tarea = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({
+        timestamps: true,
+    })
 ], Tarea);
 exports.TareaSchema = mongoose_1.SchemaFactory.createForClass(Tarea);
 //# sourceMappingURL=tarea.schema.js.map

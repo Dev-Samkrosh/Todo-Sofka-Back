@@ -23,15 +23,14 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose/types/inferrawdoctype" />
-import { CreateTareaDto } from './dto/tarea.dto';
-import { Tarea } from 'src/schemas/tarea.schema';
+import { Tarea } from 'src/tareas/schemas/tarea.schema';
 import { Model } from 'mongoose';
+import { CreateTareaDto } from './dto/create-tarea.dto';
+import { Usuario } from 'src/auth/schemas/usuario.schema';
 export declare class TareasService {
     private tareaModel;
     constructor(tareaModel: Model<Tarea>);
-    createTareas(datosTarea: CreateTareaDto): Promise<import("mongoose").Document<unknown, {}, Tarea> & Tarea & {
-        _id: import("mongoose").Types.ObjectId;
-    }>;
+    createTareas(datosTarea: CreateTareaDto, usuario: Usuario): Promise<Tarea>;
     getTareas(): Promise<Tarea[]>;
     getTareaPorId(id: string): Promise<Tarea>;
     updateTareas(id: string, camposActualizados: Tarea): Promise<Tarea>;
