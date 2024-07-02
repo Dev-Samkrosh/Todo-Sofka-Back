@@ -24,8 +24,8 @@ let TareasController = class TareasController {
     constructor(tareasService) {
         this.tareasService = tareasService;
     }
-    async getTareas() {
-        return this.tareasService.getTareas();
+    async getTareas(req) {
+        return this.tareasService.getTareas(req.user._id);
     }
     async createTareas(datosTarea, req) {
         return this.tareasService.createTareas(datosTarea, req.user);
@@ -42,8 +42,9 @@ __decorate([
     (0, common_1.Get)('/get'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
     openapi.ApiResponse({ status: 200, type: [require("./schemas/tarea.schema").Tarea] }),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TareasController.prototype, "getTareas", null);
 __decorate([

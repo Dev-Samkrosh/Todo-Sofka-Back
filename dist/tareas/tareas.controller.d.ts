@@ -5,7 +5,7 @@ import { CreateTareaDto } from './dto/create-tarea.dto';
 export declare class TareasController {
     private tareasService;
     constructor(tareasService: TareasService);
-    getTareas(): Promise<Tarea[]>;
+    getTareas(req: any): Promise<Tarea[]>;
     createTareas(datosTarea: CreateTareaDto, req: any): Promise<Tarea>;
     updateTareas(id: string, camposActualizados: UpdateTareaDto): Promise<Tarea>;
     deleteTareas(id: string): Promise<Tarea>;

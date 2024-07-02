@@ -14,20 +14,13 @@ export class Tarea {
     trim: true,
   })
   @ApiProperty()
-  id: string;
-
-  @Prop({
-    required: true,
-    trim: true,
-  })
-  @ApiProperty()
   titulo: string;
 
   @Prop()
   descripcion: string;
 
-  // @Prop({ type: Date })
-  // fechaDeVencimiento: Date; //! Revisar este tipo de dato
+  @Prop()
+  fechaDeVencimiento: string; //! Revisar este tipo de dato
 
   @Prop({
     required: true,

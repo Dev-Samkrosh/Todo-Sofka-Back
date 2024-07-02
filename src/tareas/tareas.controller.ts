@@ -23,8 +23,8 @@ export class TareasController {
 
   @Get('/get')
   @UseGuards(AuthGuard())
-  async getTareas(): Promise<Tarea[]> {
-    return this.tareasService.getTareas();
+  async getTareas(@Req() req): Promise<Tarea[]> {
+    return this.tareasService.getTareas(req.user._id);
   }
 
   @Post('/create')

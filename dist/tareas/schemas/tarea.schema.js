@@ -24,19 +24,15 @@ __decorate([
     }),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], Tarea.prototype, "id", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({
-        required: true,
-        trim: true,
-    }),
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
 ], Tarea.prototype, "titulo", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Tarea.prototype, "descripcion", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Tarea.prototype, "fechaDeVencimiento", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,

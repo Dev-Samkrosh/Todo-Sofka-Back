@@ -12,17 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateTareaDto = void 0;
 const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const usuario_schema_1 = require("../../auth/schemas/usuario.schema");
 class UpdateTareaDto {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, titulo: { required: true, type: () => String }, descripcion: { required: true, type: () => String }, estado: { required: true, type: () => Boolean }, usuario: { required: true, type: () => require("../../auth/schemas/usuario.schema").Usuario } };
+        return { titulo: { required: true, type: () => String }, descripcion: { required: true, type: () => String }, fechaDeVencimiento: { required: true, type: () => String }, estado: { required: true, type: () => Boolean }, usuario: { required: true, type: () => require("../../auth/schemas/usuario.schema").Usuario } };
     }
 }
 exports.UpdateTareaDto = UpdateTareaDto;
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], UpdateTareaDto.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -34,12 +29,12 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateTareaDto.prototype, "descripcion", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTareaDto.prototype, "fechaDeVencimiento", void 0);
+__decorate([
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], UpdateTareaDto.prototype, "estado", void 0);
-__decorate([
-    (0, class_validator_1.IsEmpty)({ message: 'No puedes pasar user id' }),
-    __metadata("design:type", usuario_schema_1.Usuario)
-], UpdateTareaDto.prototype, "usuario", void 0);
 //# sourceMappingURL=update-tarea.dto.js.map

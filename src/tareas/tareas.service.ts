@@ -20,8 +20,8 @@ export class TareasService {
     return nuevaTarea.save();
   }
 
-  async getTareas(): Promise<Tarea[]> {
-    const tarea = await this.tareaModel.find();
+  async getTareas(userId: string): Promise<Tarea[]> {
+    const tarea = await this.tareaModel.find({ usuario: userId });
 
     if (tarea.length == 0) {
       throw new NotFoundException('No hay tareas');
@@ -41,8 +41,8 @@ export class TareasService {
   }
 
   async updateTareas(id: string, camposActualizados: Tarea): Promise<Tarea> {
-    const tarea = await this.tareaModel.findOneAndUpdate(
-      { id: id },
+    const tarea = await this.tareaModel.findByIdAndUpdate(
+      id,
       camposActualizados,
     );
 
@@ -54,7 +54,7 @@ export class TareasService {
   }
 
   async deleteTareas(id: string): Promise<Tarea> {
-    const tarea = await this.tareaModel.findOneAndDelete({ id: id });
+    const tarea = await this.tareaModel.findByIdAndDelete(id);
 
     if (!tarea) {
       throw new NotFoundException(`No hay tareas con dicho id: ${id}`);

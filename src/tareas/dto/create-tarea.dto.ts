@@ -12,20 +12,14 @@ import { Usuario } from 'src/auth/schemas/usuario.schema';
 export class CreateTareaDto {
   @IsString()
   @IsNotEmpty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
   titulo: string;
 
   @IsString()
   @IsOptional()
   descripcion: string;
 
-  // @IsDate()
-  // @IsOptional()
-  // @Type(() => Date)
-  // fechaDeVencimiento: Date;
+  @IsOptional()
+  fechaDeVencimiento: string;
 
   @IsBoolean()
   @IsOptional()

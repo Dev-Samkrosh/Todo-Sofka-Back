@@ -31,7 +31,7 @@ export declare class TareasService {
     private tareaModel;
     constructor(tareaModel: Model<Tarea>);
     createTareas(datosTarea: CreateTareaDto, usuario: Usuario): Promise<Tarea>;
-    getTareas(): Promise<Tarea[]>;
+    getTareas(userId: string): Promise<Tarea[]>;
     getTareaPorId(id: string): Promise<Tarea>;
     updateTareas(id: string, camposActualizados: Tarea): Promise<Tarea>;
     deleteTareas(id: string): Promise<Tarea>;

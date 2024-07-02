@@ -12,9 +12,6 @@ import { Usuario } from 'src/auth/schemas/usuario.schema';
 
 export class UpdateTareaDto {
   @IsString()
-  id: string;
-
-  @IsString()
   @IsOptional()
   titulo: string;
 
@@ -22,15 +19,13 @@ export class UpdateTareaDto {
   @IsOptional()
   descripcion: string;
 
-  // @IsDate()
-  // @IsOptional()
-  // @Type(() => Date)
-  // fechaDeVencimiento: Date;
+  @IsOptional()
+  fechaDeVencimiento: string;
 
   @IsBoolean()
   @IsOptional()
   estado: boolean;
 
-  @IsEmpty({ message: 'No puedes pasar user id' })
+  //! @IsEmpty({ message: 'No puedes pasar user id' }) // IMPORTANTE ARREGLAR ESTO
   readonly usuario: Usuario;
 }

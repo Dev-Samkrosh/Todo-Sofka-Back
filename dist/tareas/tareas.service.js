@@ -26,8 +26,8 @@ let TareasService = class TareasService {
         const nuevaTarea = new this.tareaModel(datosTarea);
         return nuevaTarea.save();
     }
-    async getTareas() {
-        const tarea = await this.tareaModel.find();
+    async getTareas(userId) {
+        const tarea = await this.tareaModel.find({ usuario: userId });
         if (tarea.length == 0) {
             throw new common_1.NotFoundException('No hay tareas');
         }
@@ -41,14 +41,14 @@ let TareasService = class TareasService {
         return tarea;
     }
     async updateTareas(id, camposActualizados) {
-        const tarea = await this.tareaModel.findOneAndUpdate({ id: id }, camposActualizados);
+        const tarea = await this.tareaModel.findByIdAndUpdate(id, camposActualizados);
         if (!tarea) {
             throw new common_1.NotFoundException(`No hay tareas con dicho id: ${id}`);
         }
         return tarea;
     }
     async deleteTareas(id) {
-        const tarea = await this.tareaModel.findOneAndDelete({ id: id });
+        const tarea = await this.tareaModel.findByIdAndDelete(id);
         if (!tarea) {
             throw new common_1.NotFoundException(`No hay tareas con dicho id: ${id}`);
         }

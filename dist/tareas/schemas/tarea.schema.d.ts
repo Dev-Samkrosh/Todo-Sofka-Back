@@ -27,9 +27,9 @@ import mongoose, { HydratedDocument } from 'mongoose';
 import { Usuario } from 'src/auth/schemas/usuario.schema';
 export type TareaDocument = HydratedDocument<Tarea>;
 export declare class Tarea {
-    id: string;
     titulo: string;
     descripcion: string;
+    fechaDeVencimiento: string;
     estado: boolean;
     usuario: Usuario;
 }

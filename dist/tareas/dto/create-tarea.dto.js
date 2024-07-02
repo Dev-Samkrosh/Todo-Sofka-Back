@@ -15,15 +15,10 @@ const class_validator_1 = require("class-validator");
 const usuario_schema_1 = require("../../auth/schemas/usuario.schema");
 class CreateTareaDto {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => String }, titulo: { required: true, type: () => String }, descripcion: { required: true, type: () => String }, estado: { required: true, type: () => Boolean }, usuario: { required: true, type: () => require("../../auth/schemas/usuario.schema").Usuario } };
+        return { titulo: { required: true, type: () => String }, descripcion: { required: true, type: () => String }, fechaDeVencimiento: { required: true, type: () => String }, estado: { required: true, type: () => Boolean }, usuario: { required: true, type: () => require("../../auth/schemas/usuario.schema").Usuario } };
     }
 }
 exports.CreateTareaDto = CreateTareaDto;
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateTareaDto.prototype, "id", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -34,6 +29,10 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateTareaDto.prototype, "descripcion", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateTareaDto.prototype, "fechaDeVencimiento", void 0);
 __decorate([
     (0, class_validator_1.IsBoolean)(),
     (0, class_validator_1.IsOptional)(),
